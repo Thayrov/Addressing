@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    borderBottomColor: colors.primary,
+    borderBottomColor: colors.secondary,
     borderBottomWidth: 1,
     marginBottom: 20,
     padding: 5,

@@ -42,7 +42,7 @@ const ImageSelector = ({ onImage }) => {
           <Image style={styles.image} source={{ uri: pickedUrl }} />
         )}
       </View>
-      <Button title="Select image" color={colors.primary} onPress={onHandleTakeImage} />
+      <Button title="Select image" color={colors.secondary} onPress={onHandleTakeImage} />
     </View>
   );
 };
