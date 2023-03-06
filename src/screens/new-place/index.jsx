@@ -9,10 +9,12 @@ import { useState } from 'react';
 
 const NewPlace = ({ navigation }) => {
   const [title, setTitle] = useState('');
+  const [image, setImage] = useState(null);
+
   const dispatch = useDispatch();
 
   const onHandlerSubmit = () => {
-    dispatch(addPlace({ title }));
+    dispatch(addPlace({ title, image }));
     navigation.goBack();
   };
 
@@ -20,7 +22,7 @@ const NewPlace = ({ navigation }) => {
     setTitle(text);
   };
   const onImage = (uri) => {
-    console.warn(uri);
+    setImage(uri);
   };
   return (
     <ScrollView style={styles.container}>
