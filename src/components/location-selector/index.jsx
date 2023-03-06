@@ -2,6 +2,7 @@ import * as Location from 'expo-location';
 
 import { Alert, Button, Text, View } from 'react-native';
 
+import MapPreview from '../map-preview/index';
 import colors from '../../utils/colors';
 import { styles } from './styles';
 import { useState } from 'react';
@@ -32,14 +33,11 @@ const LocationSelector = ({ onLocation }) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.preview}>
-        {!pickedLocation ? (
-          <Text>No location selected</Text>
-        ) : (
-          <Text>{`latitud: ${pickedLocation.lat}, longitude: ${pickedLocation.lng}`}</Text>
-        )}
-      </View>
+      <MapPreview location={pickedLocation} style={styles.preview}>
+        <Text style={styles.text}>No location selected</Text>
+      </MapPreview>
       <Button title="Select location" onPress={onHandlerGetLocation} color={colors.secondary} />
+      <Button title="Select from map" onPress={() => null} color={colors.gray} />
     </View>
   );
 };
