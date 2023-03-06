@@ -1,0 +1,8 @@
+{
+    "parser": "@babel/eslint-parser",
+    "settings": {
+        "import/ignore": [
+            "node_modules/react-native/index\\.js$"
+        ]
+    }
+}

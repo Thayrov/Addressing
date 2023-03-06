@@ -1,9 +1,10 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { Platform } from "react-native";
+import { MapsScreen, NewPlaceScreen, PlaceDetailScreen, PlaceListScreen } from '../screens/index';
 
-import { MapsScreen, NewPlaceScreen, PlaceDetailScreen, PlaceListScreen } from "../screens/index";
-import colors from "../utils/colors";
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import colors from '../utils/colors';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,25 +14,32 @@ const PlacesNavigator = () => {
       initialRouteName="Place"
       screenOptions={{
         headerStyle: {
-          backgroundColor: Platform.OS === "android" ? colors.primary : colors.secondary,
+          backgroundColor: colors.secondary,
         },
-        headerTintColor: colors.black,
+        headerTintColor: colors.tertiary,
         headerTitleStyle: {
-          fontWeight: "bold",
+          fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen name="Places" component={PlaceListScreen} options={{ title: "Direcciones" }} />
+      <Stack.Screen
+        name="Places"
+        component={PlaceListScreen}
+        options={({ navigation }) => ({
+          title: 'Addresses',
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('NewPlace')}>
+              <MaterialIcons name="add-location" size={28} color={colors.tertiary} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
       <Stack.Screen
         name="PlaceDetail"
         component={PlaceDetailScreen}
-        options={{ title: "Detalles de la dirección" }}
+        options={{ title: "Address's details" }}
       />
-      <Stack.Screen
-        name="NewPlace"
-        component={NewPlaceScreen}
-        options={{ title: "Nueva dirección" }}
-      />
-      <Stack.Screen name="Maps" component={MapsScreen} options={{ title: "Mapa" }} />
+      <Stack.Screen name="NewPlace" component={NewPlaceScreen} options={{ title: 'New Address' }} />
+      <Stack.Screen name="Maps" component={MapsScreen} options={{ title: 'Map' }} />
     </Stack.Navigator>
   );
 };

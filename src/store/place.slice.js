@@ -1,13 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import Place from '../models/places';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   places: [],
 };
 
 const placeSlice = createSlice({
-  name: "place",
+  name: 'place',
   initialState,
-  reducers: {},
+  reducers: {
+    addPlace: (state, action) => {
+      const newPlace = new Place(Date.now().toString(), action.payload.title);
+      state.places.push(newPlace);
+    },
+  },
 });
+export const { addPlace } = placeSlice.actions;
 
 export default placeSlice.reducer;
