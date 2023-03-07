@@ -1,5 +1,4 @@
-import { FlatList, Text, View } from 'react-native';
-
+import { FlatList } from 'react-native';
 import { PlaceItem } from '../../components';
 import { styles } from './styles';
 import { useSelector } from 'react-redux';
