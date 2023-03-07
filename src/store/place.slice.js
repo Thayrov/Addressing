@@ -1,3 +1,5 @@
+import { getPlaces, insertPlace } from '../db';
+
 import Place from '../models/places';
 import { URL_GEOCODING } from '../utils/maps';
 import { createSlice } from '@reduxjs/toolkit';
@@ -12,7 +14,7 @@ const placeSlice = createSlice({
   reducers: {
     addPlace: (state, action) => {
       const newPlace = new Place(
-        Date.now().toString(),
+        action.payload.id.toString(),
         action.payload.title,
         action.payload.image,
         action.payload.address,
@@ -20,9 +22,12 @@ const placeSlice = createSlice({
       );
       state.places.push(newPlace);
     },
+    setPlaces: (state, action) => {
+      state.places = action.payload;
+    },
   },
 });
-export const { addPlace } = placeSlice.actions;
+export const { addPlace, setPlaces } = placeSlice.actions;
 
 export const savePlace = (title, image, coords) => {
   return async (dispatch) => {
@@ -38,7 +43,20 @@ export const savePlace = (title, image, coords) => {
 
       const address = data.results[0].formatted_address;
 
-      dispatch(addPlace({ title, image, address, coords }));
+      const result = await insertPlace(title, image, address, coords);
+      console.warn('result', result);
+      dispatch(addPlace({ id: result.insertId, title, image, address, coords }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const loadPlaces = () => {
+  return async (dispatch) => {
+    try {
+      const result = await getPlaces();
+      dispatch(setPlaces(result?.rows?._array));
     } catch (error) {
       console.log(error);
     }

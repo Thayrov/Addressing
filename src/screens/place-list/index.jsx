@@ -1,9 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { FlatList } from 'react-native';
 import { PlaceItem } from '../../components';
+import { loadPlaces } from '../../store/place.slice';
 import { styles } from './styles';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const PlaceList = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const places = useSelector((state) => state.place.places);
   const renderItem = ({ item }) => (
     <PlaceItem
@@ -12,6 +17,9 @@ const PlaceList = ({ navigation }) => {
     />
   );
   const keyExtractor = (item) => item.id;
+  useEffect(() => {
+    dispatch(loadPlaces());
+  }, [dispatch]);
   return (
     <FlatList
       data={places}
